@@ -1,22 +1,22 @@
-# 🤖 Tmux Multi-Agent Communication Demo
+# 🤖 Cognos Development Team - AI最適化議論システム
 
-Agent同士がやり取りするtmux環境のデモシステム
+Cognos言語・OSを真のAI最適化システムにするための専門家チーム議論環境
 
-## 🎯 デモ概要
+## 🎯 システム概要
 
-PRESIDENT → BOSS → Workers の階層型指示システムを体感できます
+PRESIDENT（社長）がBOSS（マネージャー）を通じて、AI・OS・言語の各専門研究者に議論を促し、真のAI最適化実装案を策定します
 
 ### 👥 エージェント構成
 
 ```
 📊 PRESIDENT セッション (1ペイン)
-└── PRESIDENT: プロジェクト統括責任者
+└── PRESIDENT: プロジェクト社長（全体方針決定者）
 
-📊 multiagent セッション (4ペイン)  
-├── boss1: チームリーダー
-├── worker1: 実行担当者A
-├── worker2: 実行担当者B
-└── worker3: 実行担当者C
+📊 research-team セッション (4ペイン)  
+├── boss: チーム統括マネージャー（議論促進者）
+├── ai-researcher: 最先端AI研究者（AI/ML専門家）
+├── os-researcher: 最先端OS研究者（カーネル専門家）
+└── lang-researcher: 最先端言語研究者（言語設計専門家）
 ```
 
 ## 🚀 クイックスタート
@@ -24,13 +24,14 @@ PRESIDENT → BOSS → Workers の階層型指示システムを体感できま�
 ### 0. リポジトリのクローン
 
 ```bash
-git clone https://github.com/nishimoto265/Claude-Code-Communication.git
+git clone https://github.com/Rih0z/Cognos.git
+cd Cognos
 cd Claude-Code-Communication
 ```
 
 ### 1. tmux環境構築
 
-⚠️ **注意**: 既存の `multiagent` と `president` セッションがある場合は自動的に削除されます。
+⚠️ **注意**: 既存の `research-team` と `president` セッションがある場合は自動的に削除されます。
 
 ```bash
 ./setup.sh
@@ -39,8 +40,8 @@ cd Claude-Code-Communication
 ### 2. セッションアタッチ
 
 ```bash
-# マルチエージェント確認
-tmux attach-session -t multiagent
+# 研究チーム確認
+tmux attach-session -t research-team
 
 # プレジデント確認（別ターミナルで）
 tmux attach-session -t president
@@ -55,10 +56,10 @@ tmux send-keys -t president 'claude' C-m
 ```
 認証プロンプトに従って許可を与えてください。
 
-**手順2: Multiagent一括起動**
+**手順2: Research-team一括起動**
 ```bash
-# 認証完了後、multiagentセッションを一括起動
-for i in {0..3}; do tmux send-keys -t multiagent:0.$i 'claude' C-m; done
+# 認証完了後、research-teamセッションを一括起動
+for i in {0..3}; do tmux send-keys -t research-team:0.$i 'claude' C-m; done
 ```
 
 ### 4. デモ実行
@@ -71,24 +72,31 @@ PRESIDENTセッションで直接入力：
 ## 📜 指示書について
 
 各エージェントの役割別指示書：
-- **PRESIDENT**: `instructions/president.md`
-- **boss1**: `instructions/boss.md` 
-- **worker1,2,3**: `instructions/worker.md`
+- **PRESIDENT**: `instructions/president.md` - プロジェクト社長
+- **boss**: `instructions/boss.md` - 議論統括マネージャー
+- **ai-researcher**: `instructions/ai-researcher.md` - AI/ML専門家
+- **os-researcher**: `instructions/os-researcher.md` - OS/カーネル専門家
+- **lang-researcher**: `instructions/lang-researcher.md` - 言語設計専門家
 
 **Claude Code参照**: `CLAUDE.md` でシステム構造を確認
 
-**要点:**
-- **PRESIDENT**: 「あなたはpresidentです。指示書に従って」→ boss1に指示送信
-- **boss1**: PRESIDENT指示受信 → workers全員に指示 → 完了報告
-- **workers**: Hello World実行 → 完了ファイル作成 → 最後の人が報告
+**議論の流れ:**
+1. **PRESIDENT**: 「Cognos真のAI最適化議論」をbossに指示
+2. **boss**: 各研究者に専門分野からの提案を要求
+3. **研究者たち**: 初期提案 → 相互フィードバック → 統合案作成
+4. **boss**: 総合レポートをPRESIDENTに提出
+5. **PRESIDENT**: 最終実装方針を決定
 
-## 🎬 期待される動作フロー
+## 🎬 期待される議論フロー
 
 ```
-1. PRESIDENT → boss1: "あなたはboss1です。Hello World プロジェクト開始指示"
-2. boss1 → workers: "あなたはworker[1-3]です。Hello World 作業開始"  
-3. workers → ./tmp/ファイル作成 → 最後のworker → boss1: "全員作業完了しました"
-4. boss1 → PRESIDENT: "全員完了しました"
+1. PRESIDENT → boss: "Cognos真のAI最適化について総合議論を開始せよ"
+2. boss → 各研究者: "あなたは[役割]です。AI最適化の具体案を提出せよ"  
+3. 各研究者 → boss: 専門分野からの詳細提案
+4. boss → 各研究者: 他研究者の提案を共有し統合案を要求
+5. 各研究者 → boss: 統合された実装提案
+6. boss → PRESIDENT: "総合レポート：[実装可能な具体案]"
+7. PRESIDENT: 最終決定と実装指示
 ```
 
 ## 🔧 手動操作
@@ -100,9 +108,9 @@ PRESIDENTセッションで直接入力：
 ./agent-send.sh [エージェント名] [メッセージ]
 
 # 例
-./agent-send.sh boss1 "緊急タスクです"
-./agent-send.sh worker1 "作業完了しました"
-./agent-send.sh president "最終報告です"
+./agent-send.sh boss "議論を開始してください"
+./agent-send.sh ai-researcher "AI観点からの提案です"
+./agent-send.sh president "最終決定を行います"
 
 # エージェント一覧確認
 ./agent-send.sh --list
@@ -119,8 +127,8 @@ cat logs/send_log.txt
 # 特定エージェントのログ
 grep "boss1" logs/send_log.txt
 
-# 完了ファイル確認
-ls -la ./tmp/worker*_done.txt
+# レポートファイル確認
+ls -la ./tmp/*_report.txt
 ```
 
 ### セッション状態確認
@@ -130,7 +138,7 @@ ls -la ./tmp/worker*_done.txt
 tmux list-sessions
 
 # ペイン一覧
-tmux list-panes -t multiagent
+tmux list-panes -t research-team
 tmux list-panes -t president
 ```
 
@@ -138,11 +146,12 @@ tmux list-panes -t president
 
 ```bash
 # セッション削除
-tmux kill-session -t multiagent
+tmux kill-session -t research-team
 tmux kill-session -t president
 
-# 完了ファイル削除
-rm -f ./tmp/worker*_done.txt
+# 作業ファイル削除
+rm -f ./tmp/*_done.txt
+rm -f ./tmp/*_report.txt
 
 # 再構築（自動クリア付き）
 ./setup.sh
@@ -160,4 +169,4 @@ rm -f ./tmp/worker*_done.txt
 
 ---
 
-🚀 **Agent Communication を体感してください！** 🤖✨ 
+🚀 **Cognos AI最適化の未来を創造してください！** 🤖✨ 

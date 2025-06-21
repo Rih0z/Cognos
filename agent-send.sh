@@ -1,38 +1,38 @@
 #!/bin/bash
 
-# 🚀 Agent間メッセージ送信スクリプト
+# 🚀 Cognos開発チーム メッセージ送信スクリプト
 
 # エージェント→tmuxターゲット マッピング
 get_agent_target() {
     case "$1" in
         "president") echo "president" ;;
-        "boss1") echo "multiagent:0.0" ;;
-        "worker1") echo "multiagent:0.1" ;;
-        "worker2") echo "multiagent:0.2" ;;
-        "worker3") echo "multiagent:0.3" ;;
+        "boss") echo "research-team:0.0" ;;
+        "ai-researcher") echo "research-team:0.1" ;;
+        "os-researcher") echo "research-team:0.2" ;;
+        "lang-researcher") echo "research-team:0.3" ;;
         *) echo "" ;;
     esac
 }
 
 show_usage() {
     cat << EOF
-🤖 Agent間メッセージ送信
+🤖 Cognos開発チーム メッセージ送信
 
 使用方法:
   $0 [エージェント名] [メッセージ]
   $0 --list
 
 利用可能エージェント:
-  president - プロジェクト統括責任者
-  boss1     - チームリーダー  
-  worker1   - 実行担当者A
-  worker2   - 実行担当者B
-  worker3   - 実行担当者C
+  president      - プロジェクト社長（全体方針決定者）
+  boss           - チーム統括マネージャー（議論促進者）
+  ai-researcher  - 最先端AI研究者（AI/ML専門家）
+  os-researcher  - 最先端OS研究者（カーネル専門家）
+  lang-researcher - 最先端言語研究者（言語設計専門家）
 
 使用例:
   $0 president "指示書に従って"
-  $0 boss1 "Hello World プロジェクト開始指示"
-  $0 worker1 "作業完了しました"
+  $0 boss "AI最適化議論を開始してください"
+  $0 ai-researcher "AI観点からの提案です"
 EOF
 }
 
@@ -40,11 +40,11 @@ EOF
 show_agents() {
     echo "📋 利用可能なエージェント:"
     echo "=========================="
-    echo "  president → president:0     (プロジェクト統括責任者)"
-    echo "  boss1     → multiagent:0.0  (チームリーダー)"
-    echo "  worker1   → multiagent:0.1  (実行担当者A)"
-    echo "  worker2   → multiagent:0.2  (実行担当者B)" 
-    echo "  worker3   → multiagent:0.3  (実行担当者C)"
+    echo "  president       → president:0       (プロジェクト社長)"
+    echo "  boss            → research-team:0.0  (チーム統括マネージャー)"
+    echo "  ai-researcher   → research-team:0.1  (最先端AI研究者)"
+    echo "  os-researcher   → research-team:0.2  (最先端OS研究者)" 
+    echo "  lang-researcher → research-team:0.3  (最先端言語研究者)"
 }
 
 # ログ記録

@@ -10,7 +10,8 @@
       "Bash(*worker*_done.txt*)",
       "Bash(mkdir:*)",
       "Bash(then)",
-      "Bash(else)"
+      "Bash(else)",
+      "Bash(./setup.sh)"
     ],
     "deny": []
   }
